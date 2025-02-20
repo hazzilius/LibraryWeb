@@ -22,6 +22,10 @@ public class Book {
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
+    @ManyToOne
+    @JoinColumn(name = "publisher_id", nullable = false)
+    private Publisher publisher;
+
     private int publicationYear;
 
     private String isbn;
