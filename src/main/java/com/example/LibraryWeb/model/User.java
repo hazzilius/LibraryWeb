@@ -1,5 +1,6 @@
 package com.example.LibraryWeb.model;
 
+import com.example.LibraryWeb.dto.UserDto;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -47,8 +48,6 @@ public class User {
         this.regDate = regDate;
         this.roles = roles;
     }
-
-
 
     public Long getId() {
         return id;

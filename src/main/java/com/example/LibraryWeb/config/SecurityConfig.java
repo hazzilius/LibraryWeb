@@ -23,7 +23,8 @@ public class SecurityConfig {
                 "/webjars/**",
                 "/css/**", "/js/**",
                 "/save",
-                "/profile").permitAll()
+                "profile",
+                        "includes/header").permitAll()
                 .requestMatchers("/book/**")
                 .authenticated()
                 .requestMatchers("/admin/**")

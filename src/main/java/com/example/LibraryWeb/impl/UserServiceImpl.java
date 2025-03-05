@@ -6,15 +6,11 @@ import com.example.LibraryWeb.model.User;
 import com.example.LibraryWeb.repository.UserRepo;
 import com.example.LibraryWeb.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -29,15 +25,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User save(UserDto userDto) {
-        return new User(userDto.getUsername(),
-                passwordEncoder.encode(userDto.getPassword()),
-                userDto.getEmail(),
-                userDto.getName(),
-                userDto.getPhone(),
-                LocalDate.now(),
-                Collections.singleton(Role.USER)
-        );
+    public void save(UserDto userDto) {
+        if (userRepo.findByUsername(userDto.getUsername()) == null) {
+            User user = new User();
+            user.setUsername(userDto.getUsername());
+            user.setName(userDto.getName());
+            user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+            user.setEmail(userDto.getEmail());
+            user.setPhone(userDto.getPhone());
+            user.setRegDate(LocalDate.now());
+            user.setRoles(Collections.singleton(Role.USER));
+            userRepo.save(user);
+        }
     }
 
     @Override
