@@ -20,4 +20,10 @@ public class BookController {
         model.addAttribute("book", bookService.findById(id));
         return "book";
     }
+
+    @GetMapping("/book")
+    String bookList(Model model){
+        model.addAttribute("books", bookService.findAll());
+        return "bookList";
+    }
 }

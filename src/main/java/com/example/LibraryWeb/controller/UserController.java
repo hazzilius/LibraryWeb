@@ -1,7 +1,6 @@
 package com.example.LibraryWeb.controller;
 
 import com.example.LibraryWeb.dto.UserDto;
-import com.example.LibraryWeb.model.User;
 import com.example.LibraryWeb.service.UserService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;

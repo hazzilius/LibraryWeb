@@ -27,8 +27,8 @@ public class SecurityConfig {
                         "includes/header", "*").permitAll()
                 .requestMatchers("/book/**")
                 .authenticated()
-                .requestMatchers("/admin/**")
-                .hasRole("ADMIN")
+                .requestMatchers("/admin/**", "/deleteBook/**", "/editBook/**")
+                .hasAuthority("ADMIN")
         ).formLogin(form -> form
                 .loginPage("/login")
                 .defaultSuccessUrl("/")

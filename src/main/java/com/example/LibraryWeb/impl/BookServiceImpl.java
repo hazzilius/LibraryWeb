@@ -42,4 +42,13 @@ public class BookServiceImpl implements BookService {
     public void deleteById(Long id) {
         bookRepo.deleteById(id);
     }
+
+    @Override
+    public void edit(Book book, BookDto bookDto) {
+        book.setAuthor(bookDto.getAuthor());
+        book.setTitle(bookDto.getTitle());
+        book.setYear(bookDto.getYear());
+        book.setIsbn(bookDto.getIsbn());
+        bookRepo.save(book);
+    }
 }

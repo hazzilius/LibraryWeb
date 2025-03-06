@@ -10,22 +10,31 @@
 
 <div class="container">
     <h1 class="text-center"> Регистрация </h1>
-    <hr>
     <form th:action="@{/saveUser}" th:object="${user}" method="post">
-        <label for="email" class="form-label">E-mail: </label>
-        <input required type="email" class="form-control" id="email" th:field="*{email}"/>
+        <h6>Информация для входа</h6>
+        <div class="card">
+            <div class="card-body">
+                <label for="username" class="form-label">Логин: </label>
+                <input required type="text" class="form-control" id="username" th:field="*{username}"/>
+                <label for="password" class="form-label">Пароль: </label>
+                <input required type="password" class="form-control" id="password" th:field="*{password}"/>
+            </div>
+        </div>
+        <br>
+        <h6>Контактная информация</h6>
+        <div class="card">
+            <div class="card-body">
+                <label for="name" class="form-label">Имя: </label>
+                <input required type="text" class="form-control" id="name" th:field="*{name}"/>
 
-        <label for="username" class="form-label">Логин: </label>
-        <input required type="text" class="form-control" id="username" th:field="*{username}"/>
+                <label for="email" class="form-label">E-mail: </label>
+                <input required type="email" class="form-control" id="email" th:field="*{email}"/>
 
-        <label for="name" class="form-label">Имя: </label>
-        <input required type="text" class="form-control" id="name" th:field="*{name}"/>
+                <label for="phone" class="form-label">Телефон (Необязательно): </label>
+                <input type="text" class="form-control" id="phone" th:field="*{phone}"/>
+            </div>
+        </div>
 
-        <label for="phone" class="form-label">Телефон (Необязательно): </label>
-        <input type="text" class="form-control" id="phone" th:field="*{phone}"/>
-
-        <label for="password" class="form-label">Пароль: </label>
-        <input required type="password" class="form-control" id="password" th:field="*{password}"/>
         <br>
         <button class="btn btn-primary" type="submit">Регистрация</button>
     </form>

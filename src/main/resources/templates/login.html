@@ -10,7 +10,6 @@
 
 <div class="container">
     <h1 class="text-center"> Авторизация </h1>
-    <hr>
     <div th:if="${param.error}" class="alert alert-danger">
         Неправильный логин или пароль!
     </div>
@@ -21,10 +20,14 @@
         Вы успешно зарегистрировались!
     </div>
     <form th:action="@{/login}" method=POST>
-        <label for="username" class="form-label">Логин: </label>
-        <input type="text" class="form-control" id="username" name="username"/>
-        <label for="password" class="form-label">Пароль: </label>
-        <input type="password" class="form-control" id="password" name="password"/>
+        <div class="card">
+            <div class="card-body">
+                <label for="username" class="form-label">Логин: </label>
+                <input type="text" class="form-control" id="username" name="username"/>
+                <label for="password" class="form-label">Пароль: </label>
+                <input type="password" class="form-control" id="password" name="password"/>
+            </div>
+        </div>
         <br>
         <button class="btn btn-primary" type="submit">Авторизация</button>
     </form>
