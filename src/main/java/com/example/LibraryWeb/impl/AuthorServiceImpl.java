@@ -29,4 +29,21 @@ public class AuthorServiceImpl implements AuthorService {
     public List<Author> findAll() {
         return authorRepo.findAll();
     }
+
+    @Override
+    public Author findById(Long id) {
+        return authorRepo.findById(id).orElseThrow(() -> new RuntimeException("Автор не найден!"));
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        authorRepo.deleteById(id);
+    }
+
+    @Override
+    public void edit(Author author, AuthorDto authorDto) {
+        author.setName(authorDto.getName());
+        author.setBio(authorDto.getBio());
+        authorRepo.save(author);
+    }
 }

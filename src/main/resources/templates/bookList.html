@@ -11,24 +11,24 @@
 <div class="container">
     <h1 class="text-center"> Список книг </h1>
     <hr>
-    <table class="table">
-        <thead class="thead-light">
-            <td>Название</td>
-            <td>Автор</td>
-            <td>Год</td>
-        </thead>
-        <tr th:each="book : ${books}">
-                <td>
-                    <a th:href="@{/book/{id}(id=${book.id})}" th:text="${book.title}">Название</a>
-                </td>
-                <td th:text="${book.author.name}">
-                    Автор
-                </td>
-                <td th:text="${book.year}">
-                    Год
-                </td>
-        </tr>
-    </table>
+    <div class="card">
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead class="thead-light">
+                <th>Название</th>
+                <th>Автор</th>
+                </thead>
+                <tr th:each="book : ${books}">
+                    <td>
+                        <a th:href="@{/book/{id}(id=${book.id})}" class="link-dark">[[${book.title}]], [[${book.year}]]</a>
+                    </td>
+                    <td>
+                        <a th:href="@{/author/{id}(id=${book.author.id})}" th:text="${book.author.name}" class="link-dark">Автор</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
 </div>
 </body>
 </html>

@@ -24,10 +24,10 @@ public class SecurityConfig {
                 "/css/**", "/js/**",
                 "/save",
                 "profile",
-                        "includes/header", "*").permitAll()
-                .requestMatchers("/book/**")
+                        "includes/header").permitAll()
+                .requestMatchers("/book/**", "/author/**")
                 .authenticated()
-                .requestMatchers("/admin/**", "/deleteBook/**", "/editBook/**")
+                .requestMatchers("/admin/**")
                 .hasAuthority("ADMIN")
         ).formLogin(form -> form
                 .loginPage("/login")

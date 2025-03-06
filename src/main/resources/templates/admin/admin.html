@@ -11,21 +11,46 @@
 <div class="container">
     <h1 class="text-center"> Админ-панель </h1>
     <hr>
-    <h3 class="text-center"> Книги </h3>
+    <div th:if="${param.BookSuccess}" class="alert alert-success">
+        Книга добавлена!
+    </div>
+    <div th:if="${param.AuthorSuccess}" class="alert alert-success">
+        Автор добавлен!
+    </div>
+    <h3 class="text-center"> Добавить книгу </h3>
     <div class="card">
         <div class="card-body">
-            <form th:action="@{/saveBook}" th:object="${book}" method="post">
+            <form th:action="@{/admin/saveBook}" th:object="${book}" method="post">
                 <label for="title" class="form-label">Название: </label>
                 <input required type="text" class="form-control" id="title" th:field="*{title}"/>
 
                 <label for="author" class="form-label">ID автора: </label>
-                <input required type="text" class="form-control" id="author" th:field="*{author}"/>
+                <select class="form-control" id="author" th:field="*{author}">
+                    <option th:each="author : ${authors}" th:value="${author.id}" th:text="${author.name}">Опция</option>
+                </select>
 
                 <label for="isbn" class="form-label">ISBN: </label>
                 <input type="text" class="form-control" id="isbn" th:field="*{isbn}"/>
 
                 <label for="year" class="form-label">Год: </label>
                 <input type="text" class="form-control" id="year" th:field="*{year}"/>
+
+                <br>
+                <button class="btn btn-primary" type="submit">Добавить</button>
+            </form>
+        </div>
+    </div>
+    <br>
+
+    <h3 class="text-center"> Добавить автора </h3>
+    <div class="card">
+        <div class="card-body">
+            <form th:action="@{/admin/saveAuthor}" th:object="${author}" method="post">
+                <label for="name" class="form-label">Имя: </label>
+                <input required type="text" class="form-control" id="name" th:field="*{name}"/>
+
+                <label for="bio" class="form-label">Биография: </label>
+                <input type="text" class="form-control" id="bio" th:field="*{bio}"/>
 
                 <br>
                 <button class="btn btn-primary" type="submit">Добавить</button>
