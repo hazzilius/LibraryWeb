@@ -1,14 +1,10 @@
 package com.example.LibraryWeb.model;
 
-import com.example.LibraryWeb.dto.UserDto;
 import jakarta.persistence.*;
-import lombok.Data;
 
 import java.time.LocalDate;
-import java.util.Collection;
 import java.util.Set;
 
-@Data
 @Entity
 @Table(name = "users")
 public class User {

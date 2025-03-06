@@ -30,7 +30,7 @@ public class UserController {
         return "registration";
     }
 
-    @PostMapping("/save")
+    @PostMapping("/saveUser")
     String save(@ModelAttribute("user") UserDto userDto) {
         userService.save(userDto);
         return "redirect:/login";

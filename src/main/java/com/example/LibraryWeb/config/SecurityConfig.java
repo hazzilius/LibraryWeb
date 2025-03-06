@@ -24,7 +24,7 @@ public class SecurityConfig {
                 "/css/**", "/js/**",
                 "/save",
                 "profile",
-                        "includes/header").permitAll()
+                        "includes/header", "*").permitAll()
                 .requestMatchers("/book/**")
                 .authenticated()
                 .requestMatchers("/admin/**")

@@ -11,7 +11,7 @@
 <div class="container">
     <h1 class="text-center"> Регистрация </h1>
     <hr>
-    <form th:action="@{/save}" th:object="${user}" method="post">
+    <form th:action="@{/saveUser}" th:object="${user}" method="post">
         <label for="email" class="form-label">E-mail: </label>
         <input required type="email" class="form-control" id="email" th:field="*{email}"/>
 
