@@ -67,6 +67,7 @@ public class AdminController {
     @PreAuthorize("hasAuthority('ADMIN')")
     String editBook(@PathVariable("id") Long id, Model model){
         model.addAttribute("bookObject", bookService.findById(id));
+        model.addAttribute("authors", authorService.findAll());
         return "admin/bookEdit";
     }
 

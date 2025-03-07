@@ -52,9 +52,13 @@
             </form>
             <hr>
             <div th:each="review : ${reviews}">
-                <h5 class="card-text">[[${review.user.name}]]</h5>
-                <h6 class="card-text">[[${review.date}]]</h6>
-                <br>
+                <div>
+                    <h5 class="card-text">[[${review.user.name}]]</h5>
+                    <h6 class="card-text">[[${review.date}]]</h6>
+                    <form th:if="${#authorization.expression('hasAuthority(''ADMIN'')') || user.id == review.user.id}" method="post" th:action="@{/deleteReview/{bookId}/{id}(id = ${review.id}, bookId = ${book.id})}" >
+                        <button type="submit" class="btn btn-danger">Удалить</button>
+                    </form>
+                </div>
                 <p class="card-text">[[${review.text}]]</p>
                 <hr>
             </div>

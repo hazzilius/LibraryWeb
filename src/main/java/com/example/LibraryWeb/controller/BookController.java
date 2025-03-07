@@ -1,9 +1,13 @@
 package com.example.LibraryWeb.controller;
 
+import com.example.LibraryWeb.dto.BookDto;
 import com.example.LibraryWeb.dto.ReviewDto;
 import com.example.LibraryWeb.dto.UserDto;
 import com.example.LibraryWeb.service.BookService;
 import com.example.LibraryWeb.service.ReviewService;
+import com.example.LibraryWeb.service.UserService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,10 +20,12 @@ public class BookController {
 
     private final BookService bookService;
     private final ReviewService reviewService;
+    private final UserService userService;
 
-    public BookController(BookService bookService, ReviewService reviewService) {
+    public BookController(BookService bookService, ReviewService reviewService, UserService userService) {
         this.bookService = bookService;
         this.reviewService = reviewService;
+        this.userService = userService;
     }
 
     @ModelAttribute("review")
@@ -31,6 +37,8 @@ public class BookController {
     String book(@PathVariable("id") Long id, Model model){
         model.addAttribute("book", bookService.findById(id));
         model.addAttribute("reviews", reviewService.findByBook_Id(id).reversed());
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        model.addAttribute("user", userService.findUser(auth.getName()));
         return "book";
     }
 
@@ -44,5 +52,11 @@ public class BookController {
     String bookList(Model model){
         model.addAttribute("books", bookService.findAll());
         return "bookList";
+    }
+
+    @PostMapping("/deleteReview/{bookId}/{id}")
+    String deleteReview(@PathVariable("id") Long id, @PathVariable("bookId") Long bookId){
+        reviewService.delete(id);
+        return "redirect:/book/{bookId}";
     }
 }

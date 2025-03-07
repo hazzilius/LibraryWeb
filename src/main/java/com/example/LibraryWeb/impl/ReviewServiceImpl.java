@@ -43,4 +43,15 @@ public class ReviewServiceImpl implements ReviewService {
     public List<Review> findByBook_Id(Long id) {
         return reviewRepo.findByBook_Id(id);
     }
+
+    @Override
+    public Review findById(Long id) {
+        return reviewRepo.findById(id).orElseThrow(() -> new RuntimeException("Комментарий не найден!"));
+    }
+
+    @Override
+    public void delete(Long id) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        reviewRepo.deleteById(id);
+    }
 }
