@@ -36,6 +36,30 @@
             </form>
         </div>
     </div>
+
+    <br sec:authorize="hasAuthority('ADMIN')">
+
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-text">Комментарии</h4>
+            <hr>
+            <form th:action="@{/addReview/{id}(id = ${book.id})}" th:object="${review}" method="post">
+                <label for="text" class="form-label">Комментарий: </label>
+                <textarea required type="text" class="form-control" id="text" th:field="*{text}"></textarea>
+
+                <br>
+                <button class="btn btn-primary" type="submit">Отправить</button>
+            </form>
+            <hr>
+            <div th:each="review : ${reviews}">
+                <h5 class="card-text">[[${review.user.name}]]</h5>
+                <h6 class="card-text">[[${review.date}]]</h6>
+                <br>
+                <p class="card-text">[[${review.text}]]</p>
+                <hr>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 </html>

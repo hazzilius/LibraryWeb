@@ -22,10 +22,10 @@ public class SecurityConfig {
                 "registration",
                 "/webjars/**",
                 "/css/**", "/js/**",
-                "/save",
+                "/saveUser",
                 "profile",
                         "includes/header").permitAll()
-                .requestMatchers("/book/**", "/author/**")
+                .requestMatchers("/book/**", "/author/**", "/addReview/**")
                 .authenticated()
                 .requestMatchers("/admin/**")
                 .hasAuthority("ADMIN")

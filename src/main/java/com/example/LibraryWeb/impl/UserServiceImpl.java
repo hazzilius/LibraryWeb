@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
             user.setEmail(userDto.getEmail());
             user.setPhone(userDto.getPhone());
             user.setRegDate(LocalDate.now());
-            user.setRoles(Collections.singleton(Role.ADMIN));
+            user.setRoles(Collections.singleton(Role.USER));
             userRepo.save(user);
         }
     }
