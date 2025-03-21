@@ -24,7 +24,7 @@ public class SecurityConfig {
                 "/css/**", "/js/**",
                 "/saveUser",
                 "profile",
-                        "includes/header", "*").permitAll()
+                        "includes/header", "/denied").permitAll()
                 .requestMatchers("/book/**", "/author/**", "/addReview/**", "/deleteReview/**")
                 .authenticated()
                 .requestMatchers("/admin/**")
@@ -38,6 +38,7 @@ public class SecurityConfig {
                 .logoutSuccessUrl("/login?logout")
                 .permitAll()
         );
+        http.exceptionHandling((exception) -> exception.accessDeniedPage("/denied"));
         return http.build();
     }
 }
