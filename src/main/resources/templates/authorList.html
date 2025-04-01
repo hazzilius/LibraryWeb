@@ -12,14 +12,13 @@
     <h1 class="text-center"> [[${pageTitle}]] </h1>
     <hr>
     <form th:action="@{/author}" method=GET>
-        <div class="d-inline-flex w-100">
-            <label for="search"></label>
-            <input type="text" class="form-control" id="search" name="search" placeholder="Поиск" th:value="${search}"/>
-            <button type="submit" class="btn btn-primary">Найти</button>
-        </div>
+        <div th:replace="~{../includes/searchbar}"></div>
     </form>
     <br>
-    <div class="card">
+    <div th:if="${authors.isEmpty()}" class="alert alert-danger">
+        Ничего не найдено!
+    </div>
+    <div class="card" th:if="${!authors.isEmpty()}">
         <div class="card-body">
             <table class="table table-hover">
                 <thead class="thead-light">

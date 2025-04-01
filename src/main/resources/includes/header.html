@@ -1,24 +1,21 @@
-<div class="container" xmlns:sec="http://www.w3.org/1999/xhtml">
-  <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-
-    <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-      <li><a th:href="@{/}" class="nav-link px-2 link-secondary">Главная</a></li>
-      <li><a th:href="@{/book}" class="nav-link px-2 link-dark">Книги</a></li>
-      <li><a th:href="@{/author}" class="nav-link px-2 link-dark">Авторы</a></li>
-      <li sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/admin}" class="nav-link px-2 link-dark">Админ-панель</a></li>
+<nav class="py-2 bg-light border-bottom" xmlns:sec="http://www.w3.org/1999/xhtml">
+  <div class="container d-flex flex-wrap">
+    <ul class="nav me-auto">
+      <li class="nav-item"><a th:href="@{/}" class="nav-link link-dark px-2 active" aria-current="page">Главная</a></li>
+      <li sec:authorize="isAuthenticated()" class="nav-item"><a th:href="@{/book}" class="nav-link link-dark px-2">Книги</a></li>
+      <li sec:authorize="isAuthenticated()" class="nav-item"><a th:href="@{/author}" class="nav-link link-dark px-2">Авторы</a></li>
+      <li sec:authorize="hasAuthority('ADMIN')" class="nav-item"><a th:href="@{/admin}" class="nav-link link-dark px-2">Админ-панель</a></li>
     </ul>
-
-    <div class="text-end d-inline-flex">
-      <div sec:authorize="!isAuthenticated()">
-        <a th:href="@{/login}"> <button type="button" class="btn btn-outline-primary me-2">Авторизация</button></a>
-        <a th:href="@{/registration}"><button type="button" class="btn btn-primary">Регистрация</button></a>
-      </div>
-      <div sec:authorize="isAuthenticated()">
-        <form th:action="@{/logout}" method="post">
-          <a th:href="@{/profile}"> <button type="button" class="btn btn-outline-primary me-2">Профиль</button></a>
-          <button type="submit" class="btn btn-primary">Выход</button>
-        </form>
-      </div>
+    <div>
+      <ul sec:authorize="!isAuthenticated()" class="nav">
+        <li class="nav-item"><a th:href="@{/login}" class="nav-link link-dark px-2">Авторизация</a></li>
+        <li class="nav-item"><a th:href="@{/registration}" class="nav-link link-dark px-2">Регистрация</a></li>
+      </ul>
+      <ul sec:authorize="isAuthenticated()" class="nav">
+        <li class="nav-item"><a th:href="@{/profile}" class="nav-link link-dark px-2">Профиль</a></li>
+        <li class="nav-item"><a th:href="@{/logout}" class="nav-link link-dark px-2">Выход</a></li>
+      </ul>
     </div>
-  </header>
-</div>
+  </div>
+</nav>
+<br>

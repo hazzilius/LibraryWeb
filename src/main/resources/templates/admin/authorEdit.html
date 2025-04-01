@@ -11,7 +11,7 @@
 <div class="container">
     <h1 class="text-center"> Редактирование автора "[[${author.name}]]" </h1>
     <hr>
-    <div class="card">
+    <div class="card bg-light">
         <div class="card-body">
             <form th:action="@{/admin/editAuthor/{id}(id = ${author.id})}" th:object="${author}" method="post">
                 <label for="name" class="form-label">Имя: </label>

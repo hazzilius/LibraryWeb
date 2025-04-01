@@ -18,7 +18,7 @@
         Автор добавлен!
     </div>
     <h3 class="text-center"> Добавить книгу </h3>
-    <div class="card">
+    <div class="card bg-light">
         <div class="card-body">
             <form th:action="@{/admin/saveBook}" th:object="${book}" method="post">
                 <label for="title" class="form-label">Название: </label>
@@ -43,7 +43,7 @@
     <br>
 
     <h3 class="text-center"> Добавить автора </h3>
-    <div class="card">
+    <div class="card bg-light">
         <div class="card-body">
             <form th:action="@{/admin/saveAuthor}" th:object="${author}" method="post">
                 <label for="name" class="form-label">Имя: </label>
