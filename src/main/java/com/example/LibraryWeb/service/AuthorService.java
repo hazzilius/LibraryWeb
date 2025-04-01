@@ -2,15 +2,14 @@ package com.example.LibraryWeb.service;
 
 import com.example.LibraryWeb.dto.AuthorDto;
 import com.example.LibraryWeb.model.Author;
-
-import java.util.List;
+import org.springframework.data.domain.Slice;
 
 public interface AuthorService {
-    void save(AuthorDto authorDto);
-    List<Author> findAll();
+    Author save(AuthorDto authorDto);
+    Slice<Author> findAll(Integer offset, Integer limit);
+    Slice<Author> findByName(String name, Integer offset, Integer limit);
     Author findById(Long id);
+    void delete(Long id);
 
-    void deleteById(Long id);
-
-    void edit(Author author, AuthorDto authorDto);
+    void update(Author author, AuthorDto authorDto);
 }

@@ -6,6 +6,8 @@ import com.example.LibraryWeb.repository.BookRepo;
 import com.example.LibraryWeb.repository.ReviewRepo;
 import com.example.LibraryWeb.repository.UserRepo;
 import com.example.LibraryWeb.service.ReviewService;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -40,8 +42,8 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public List<Review> findByBook_Id(Long id) {
-        return reviewRepo.findByBook_Id(id);
+    public Slice<Review> findByBook_Id(Long id, Integer offset, Integer limit) {
+        return reviewRepo.findByBook_IdOrderByDateDesc(PageRequest.of(offset, limit) ,id);
     }
 
     @Override

@@ -2,14 +2,13 @@ package com.example.LibraryWeb.service;
 
 import com.example.LibraryWeb.dto.BookDto;
 import com.example.LibraryWeb.model.Book;
-
-import java.util.List;
-import java.util.Optional;
+import org.springframework.data.domain.Slice;
 
 public interface BookService {
-    void save(BookDto bookDto);
-    List<Book> findAll();
+    Book save(BookDto bookDto);
+    Slice<Book> findAll(Integer offset, Integer limit);
+    Slice<Book> findByTitle(String title, Integer offset, Integer limit);
     Book findById(Long id);
-    void deleteById(Long id);
-    void edit(Book book, BookDto bookDto);
+    void delete(Long id);
+    void update(Book book, BookDto bookDto);
 }

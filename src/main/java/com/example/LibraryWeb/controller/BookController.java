@@ -6,14 +6,13 @@ import com.example.LibraryWeb.dto.UserDto;
 import com.example.LibraryWeb.service.BookService;
 import com.example.LibraryWeb.service.ReviewService;
 import com.example.LibraryWeb.service.UserService;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class BookController {
@@ -34,9 +33,11 @@ public class BookController {
     }
 
     @GetMapping("/book/{id}")
-    String book(@PathVariable("id") Long id, Model model){
+    String book(@PathVariable("id") Long id, Model model,
+                @RequestParam(defaultValue = "0") @Min(0) Integer offset,
+                @RequestParam(defaultValue = "20") @Min(1) @Max(100) Integer limit){
         model.addAttribute("book", bookService.findById(id));
-        model.addAttribute("reviews", reviewService.findByBook_Id(id).reversed());
+        model.addAttribute("reviews", reviewService.findByBook_Id(id, offset, limit));
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         model.addAttribute("user", userService.findUser(auth.getName()));
         return "book";
@@ -49,8 +50,15 @@ public class BookController {
     }
 
     @GetMapping("/book")
-    String bookList(Model model){
-        model.addAttribute("books", bookService.findAll());
+    String bookList(Model model,
+                    @RequestParam(defaultValue = "") String search,
+                    @RequestParam(defaultValue = "0") @Min(0) Integer offset,
+                    @RequestParam(defaultValue = "20") @Min(1) @Max(100) Integer limit){
+        model.addAttribute("search", search);
+        model.addAttribute("books", !search.isBlank() ?
+                bookService.findByTitle(search, offset, limit) : bookService.findAll(offset, limit));
+        model.addAttribute("pageTitle", !search.isBlank() ?
+                String.format("Поиск - %s", search) : "Список книг");
         return "bookList";
     }
 

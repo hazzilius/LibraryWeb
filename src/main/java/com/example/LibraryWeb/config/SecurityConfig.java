@@ -24,7 +24,7 @@ public class SecurityConfig {
                 "/css/**", "/js/**",
                 "/saveUser",
                 "profile",
-                        "includes/header", "/denied").permitAll()
+                        "includes/header", "/denied", "/api/v1/**").permitAll()
                 .requestMatchers("/book/**", "/author/**", "/addReview/**", "/deleteReview/**")
                 .authenticated()
                 .requestMatchers("/admin/**")
@@ -39,6 +39,7 @@ public class SecurityConfig {
                 .permitAll()
         );
         http.exceptionHandling((exception) -> exception.accessDeniedPage("/denied"));
+        http.csrf(csrf -> csrf.disable());
         return http.build();
     }
 }

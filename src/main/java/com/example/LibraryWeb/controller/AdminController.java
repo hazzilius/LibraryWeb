@@ -2,10 +2,10 @@ package com.example.LibraryWeb.controller;
 
 import com.example.LibraryWeb.dto.AuthorDto;
 import com.example.LibraryWeb.dto.BookDto;
-import com.example.LibraryWeb.model.Author;
-import com.example.LibraryWeb.model.Book;
 import com.example.LibraryWeb.service.AuthorService;
 import com.example.LibraryWeb.service.BookService;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,8 +35,10 @@ public class AdminController {
 
     @GetMapping("/admin")
     @PreAuthorize("hasAuthority('ADMIN')")
-    String admin(Model model){
-        model.addAttribute("authors", authorService.findAll());
+    String admin(Model model,
+                 @RequestParam(defaultValue = "0") @Min(0) Integer offset,
+                 @RequestParam(defaultValue = "20") @Min(1) @Max(100) Integer limit){
+        model.addAttribute("authors", authorService.findAll(offset, limit));
         return "admin/admin";
 
     }
@@ -52,22 +54,24 @@ public class AdminController {
     @PostMapping("/admin/deleteBook/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
     String deleteBook(@PathVariable("id") Long id){
-        bookService.deleteById(id);
+        bookService.delete(id);
         return "redirect:/admin";
     }
 
     @PostMapping("/admin/editBook/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
     String editBook(@PathVariable("id") Long id, BookDto bookDto){
-        bookService.edit(bookService.findById(id), bookDto);
+        bookService.update(bookService.findById(id), bookDto);
         return "redirect:/book/{id}";
     }
 
     @GetMapping("/admin/edit/book/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    String editBook(@PathVariable("id") Long id, Model model){
+    String editBook(@PathVariable("id") Long id, Model model,
+                    @RequestParam(defaultValue = "0") @Min(0) Integer offset,
+                    @RequestParam(defaultValue = "20") @Min(1) @Max(100) Integer limit){
         model.addAttribute("bookObject", bookService.findById(id));
-        model.addAttribute("authors", authorService.findAll());
+        model.addAttribute("authors", authorService.findAll(offset, limit));
         return "admin/bookEdit";
     }
 
@@ -82,14 +86,14 @@ public class AdminController {
     @PostMapping("/admin/deleteAuthor/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
     String deleteAuthor(@PathVariable("id") Long id){
-        authorService.deleteById(id);
+        authorService.delete(id);
         return "redirect:/admin";
     }
 
     @PostMapping("/admin/editAuthor/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
     String editAuthor(@PathVariable("id") Long id, AuthorDto authorDto){
-        authorService.edit(authorService.findById(id), authorDto);
+        authorService.update(authorService.findById(id), authorDto);
         return "redirect:/author/{id}";
     }
 

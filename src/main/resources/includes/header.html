@@ -11,7 +11,7 @@
       <li sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/admin}" class="nav-link px-2 link-dark">Админ-панель</a></li>
     </ul>
 
-    <div class="col-md-3 text-end">
+    <div class="text-end d-inline-flex">
       <div sec:authorize="!isAuthenticated()">
         <a th:href="@{/login}"> <button type="button" class="btn btn-outline-primary me-2">Авторизация</button></a>
         <a th:href="@{/registration}"><button type="button" class="btn btn-primary">Регистрация</button></a>

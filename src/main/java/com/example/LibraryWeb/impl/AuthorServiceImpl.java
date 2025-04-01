@@ -4,6 +4,8 @@ import com.example.LibraryWeb.dto.AuthorDto;
 import com.example.LibraryWeb.model.Author;
 import com.example.LibraryWeb.repository.AuthorRepo;
 import com.example.LibraryWeb.service.AuthorService;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,16 +20,22 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public void save(AuthorDto authorDto) {
+    public Author save(AuthorDto authorDto) {
         Author author = new Author();
         author.setName(authorDto.getName());
         author.setBio(authorDto.getBio());
         authorRepo.save(author);
+        return author;
     }
 
     @Override
-    public List<Author> findAll() {
-        return authorRepo.findAll();
+    public Slice<Author> findAll(Integer offset, Integer limit) {
+        return authorRepo.findAll(PageRequest.of(offset, limit));
+    }
+
+    @Override
+    public Slice<Author> findByName(String name, Integer offset, Integer limit) {
+        return authorRepo.findByNameContainingIgnoreCase(PageRequest.of(offset, limit), name);
     }
 
     @Override
@@ -36,12 +44,12 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void delete(Long id) {
         authorRepo.deleteById(id);
     }
 
     @Override
-    public void edit(Author author, AuthorDto authorDto) {
+    public void update(Author author, AuthorDto authorDto) {
         author.setName(authorDto.getName());
         author.setBio(authorDto.getBio());
         authorRepo.save(author);

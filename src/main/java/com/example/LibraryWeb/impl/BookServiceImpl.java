@@ -4,6 +4,8 @@ import com.example.LibraryWeb.dto.BookDto;
 import com.example.LibraryWeb.model.Book;
 import com.example.LibraryWeb.repository.BookRepo;
 import com.example.LibraryWeb.service.BookService;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,18 +21,24 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void save(BookDto bookDto) {
+    public Book save(BookDto bookDto) {
         Book book = new Book();
         book.setAuthor(bookDto.getAuthor());
         book.setTitle(bookDto.getTitle());
         book.setYear(bookDto.getYear());
         book.setIsbn(bookDto.getIsbn());
         bookRepo.save(book);
+        return book;
     }
 
     @Override
-    public List<Book> findAll() {
-        return bookRepo.findAll();
+    public Slice<Book> findAll(Integer offset, Integer limit) {
+        return bookRepo.findAll(PageRequest.of(offset, limit));
+    }
+
+    @Override
+    public Slice<Book> findByTitle(String title, Integer offset, Integer limit) {
+        return bookRepo.findByTitleContainingIgnoreCase(PageRequest.of(offset, limit), title);
     }
 
     @Override
@@ -39,12 +47,12 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void delete(Long id) {
         bookRepo.deleteById(id);
     }
 
     @Override
-    public void edit(Book book, BookDto bookDto) {
+    public void update(Book book, BookDto bookDto) {
         book.setAuthor(bookDto.getAuthor());
         book.setTitle(bookDto.getTitle());
         book.setYear(bookDto.getYear());
